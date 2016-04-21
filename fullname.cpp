@@ -29,12 +29,19 @@ CStyle::CStyle(int _name_num)
 	memset(list, 0, sizeof(struct Fullname)*name_num);
 
 	srand(time(NULL));
+
+    for (int i=0; i<4; i++)
+        store_buffer[0] = NULL;
 }
 
 int CStyle::fullname(struct Fullname *fn, NAME_FLAGS flags)
 {
 	if (name_num <= 0)
 		return -2;
+
+    // 随机生成
+    if (_0 == flags)
+        flags = NAME_FLAGS(rand()%6);
 
 	switch (flags)
 	{
@@ -63,9 +70,10 @@ int CStyle::fullname(struct Fullname *fn, NAME_FLAGS flags)
 		break;
 
 		default:
-			return -3;
 		break;
 	}
+
+	return 0;
 }
 
 int CStyle::_fullname(struct Fullname *fn)
@@ -191,16 +199,6 @@ int CStyle::_full2name22(struct Fullname *fn)
 	return 0;
 }
 
-int CStyle::setname2(char *src)
-{
-	if (NULL == src)
-		return -1;
-
-	temp = buffer_name_female;
-	buffer_name_female = src;
-	return 0;
-}
-
 int CStyle::fullname_print(const struct Fullname *print)
 {
     if (NULL == print)
@@ -214,9 +212,79 @@ int CStyle::fullname_print(const struct Fullname *print)
     return 0;
 }
 
-int CStyle::restname2(void)
+int CStyle::setname(char *src, SETNAME_FLAGS flags)
 {
-    buffer_name_female2 = temp;
+	if (NULL == src)
+		return -1;
+
+	switch (flags)
+	{
+    case _single_surname:
+        store_buffer[0] = buffer_surname_female;
+        buffer_surname_female = src;
+        break;
+
+    case _double_surname:
+        store_buffer[1] = buffer_surname_female2;
+        buffer_surname_female2 = src;
+        break;
+
+    case _single_name:
+        store_buffer[2] = buffer_name_female;
+        buffer_name_female = src;
+        break;
+
+    case _double_name:
+        store_buffer[3] = buffer_name_female2;
+        buffer_name_female2 = src;
+        break;
+
+    default:
+        break;
+	}
+	return 0;
+}
+
+int CStyle::restname(SETNAME_FLAGS flags)
+{
+    switch (flags)
+    {
+    case _single_surname:
+        if (NULL == store_buffer[0])
+            return -1;
+
+        free(buffer_surname_female);
+        buffer_surname_female = store_buffer[0];
+        break;
+
+    case _double_surname:
+        if (NULL == store_buffer[1])
+            return -1;
+
+        free(buffer_surname_female2);
+        buffer_surname_female2 = store_buffer[1];
+        break;
+
+
+    case _single_name:
+        if (NULL == store_buffer[2])
+            return -1;
+
+        free(buffer_name_female);
+        buffer_name_female = store_buffer[2];
+        break;
+
+    case _double_name:
+        if (NULL == store_buffer[3])
+            return -1;
+
+        free(buffer_name_female2);
+        buffer_name_female2 = store_buffer[3];
+        break;
+
+    default:
+        break;
+    }
     return 0;
 }
 

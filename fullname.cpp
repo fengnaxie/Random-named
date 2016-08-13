@@ -304,14 +304,14 @@ int CStyle::print(const int index)
         write_error("索引超出范围！\n");
         return -1;
     }
+    
+    if (NULL == list)
+    {
+    	write_error("内部缓冲区不存在！\n");
+    	return -1;
+    }
 
     print = &list[index];
-
-    if (NULL == print)
-    {
-        write_error("需打印的姓名不存在！\n");
-        return -1;
-    }
 
     printf("%c%c", print->w[0].w[0], print->w[0].w[1]);
     printf("%c%c", print->w[1].w[0], print->w[1].w[1]);

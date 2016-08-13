@@ -1,10 +1,10 @@
 /*
-**³ÌĞòÃû£º		Ï¹ÆğÃû¹¤¾ß
-**ËµÃ÷£º		Ï¹ÆğÃû£¬ÓÃ×÷Ò»¸ö¿âÁ´½ÓÊ¹ÓÃ£¬Ê¹ÓÃÃæÏò¶ÔÏóÖØ¹¹
-**°æ±¾£º		V0.1
-**¿ª·¢ÈÕÆÚ£º	2016/4/20
-**ĞŞ¸ÄÈÕÆÚ£º	2016/4/20
-**×÷Õß£º		óã·ã
+**ç¨‹åºåï¼š		çèµ·åå·¥å…·
+**è¯´æ˜ï¼š		çèµ·åï¼Œç”¨ä½œä¸€ä¸ªåº“é“¾æ¥ä½¿ç”¨ï¼Œä½¿ç”¨é¢å‘å¯¹è±¡é‡æ„
+**ç‰ˆæœ¬ï¼š		V0.1
+**å¼€å‘æ—¥æœŸï¼š	2016/4/20
+**ä¿®æ”¹æ—¥æœŸï¼š	2016/8/13
+**ä½œè€…ï¼š		ç­±æ«
 */
 
 #include "fullname.h"
@@ -19,7 +19,7 @@ CStyle::CStyle(int _name_num)
 {
 	name_num = _name_num;
 
-    // Ä¬ÈÏ½«ËùÓĞµÄ´íÎóÊä³öµ½ÆÁÄ»ÉÏ
+    // é»˜è®¤å°†æ‰€æœ‰çš„é”™è¯¯è¾“å‡ºåˆ°å±å¹•ä¸Š
 	open_error_file(NULL, stderr);
 
 	if (name_num <= 0)
@@ -32,7 +32,7 @@ CStyle::CStyle(int _name_num)
 
 		if (NULL == list)
 		{
-			write_error("list±íÉêÇëÄÚ´æÊ§°Ü£¡\n");
+			write_error("listè¡¨ç”³è¯·å†…å­˜å¤±è´¥ï¼\n");
 			return;
 		}
 
@@ -48,7 +48,7 @@ CStyle::CStyle(int _name_num)
 
 CStyle::CStyle(const CStyle &cs)
 {
-    // ¿½±´¹¹Ôìº¯Êı
+    // æ‹·è´æ„é€ å‡½æ•°
     name_num = cs.name_num;
 	if (name_num <= 0)
 	{
@@ -60,7 +60,7 @@ CStyle::CStyle(const CStyle &cs)
 
 		if (NULL == list)
 		{
-			write_error("list±íÉêÇëÄÚ´æÊ§°Ü£¡\n");
+			write_error("listè¡¨ç”³è¯·å†…å­˜å¤±è´¥ï¼\n");
 			return;
 		}
 
@@ -88,11 +88,11 @@ CStyle::CStyle(const CStyle &cs)
 char *CStyle::create(const int index, NAME_FLAGS flags)
 {
     struct Fullname *fn;
-    // Ëæ»úÉú³É
+    // éšæœºç”Ÿæˆ
     if (_0 == flags)
         flags = NAME_FLAGS(random()%6);
 
-    // indexĞ¡ÓÚ0±íÃ÷ÁÙÊ±Éú³É£¬²»±£´æÊı¾İ
+    // indexå°äº0è¡¨æ˜ä¸´æ—¶ç”Ÿæˆï¼Œä¸ä¿å­˜æ•°æ®
     if (index < 0)
     {
         struct Fullname fn_temp;
@@ -107,11 +107,11 @@ char *CStyle::create(const int index, NAME_FLAGS flags)
 
             if (NULL == new_list)
             {
-                write_error("ÉêÇë¸ü´óµÄÄÚ´æÊ§°Ü£¡Çë²é¿´Ë÷ÒıÊÇ·ñ¹ı´ó£¡\n");
+                write_error("ç”³è¯·æ›´å¤§çš„å†…å­˜å¤±è´¥ï¼è¯·æŸ¥çœ‹ç´¢å¼•æ˜¯å¦è¿‡å¤§ï¼\n");
                 return NULL;
             }
 
-            // ¿½±´Êı¾İµ½ĞÂµÄÄÚ´æÖĞ
+            // æ‹·è´æ•°æ®åˆ°æ–°çš„å†…å­˜ä¸­
             memset(new_list, 0, sizeof(struct Fullname)*(index+1));
 
             if (NULL != list)
@@ -120,7 +120,7 @@ char *CStyle::create(const int index, NAME_FLAGS flags)
                 delete[] list;
             }
 
-            // Ö¸ÏòĞÂÊı¾İ
+            // æŒ‡å‘æ–°æ•°æ®
             name_num = index+1;
             list = new_list;
         }
@@ -163,7 +163,7 @@ char *CStyle::create(const int index, NAME_FLAGS flags)
 
 char *CStyle::_fullname(struct Fullname *fn)
 {
-	// ÖØ¶¨Ïò
+	// é‡å®šå‘
 	surname = (struct Word *)buffer_surname_female;
 	name = (struct Word *)buffer_name_female;
 
@@ -175,7 +175,7 @@ char *CStyle::_fullname(struct Fullname *fn)
 
 char *CStyle::_fullname2(struct Fullname *fn)
 {
-	// ÖØ¶¨Ïò
+	// é‡å®šå‘
 	surname = (struct Word *)buffer_surname_female;
 	name = (struct Word *)buffer_name_female;
 
@@ -190,13 +190,13 @@ char *CStyle::_fullname22(struct Fullname *fn)
 {
 	int i;
 
-	// ÖØ¶¨Ïò
+	// é‡å®šå‘
 	surname = (struct Word *)buffer_surname_female;
 	name = (struct Word *)buffer_name_female2;
 
 	i = random()%((strlen((char *)name)-1)/2+1);
 
-    // È·±£iÎª2µÄ±¶Êı
+    // ç¡®ä¿iä¸º2çš„å€æ•°
 	if (i%2 && i!=0) i--;
 
 	fn->w[0] = surname[random()%((strlen((char *)surname)-1)/2+1)];
@@ -210,13 +210,13 @@ char *CStyle::_full2name(struct Fullname *fn)
 {
 	int i;
 
-	// ÖØ¶¨Ïò
+	// é‡å®šå‘
 	surname = (struct Word *)buffer_surname_female2;
 	name = (struct Word *)buffer_name_female;
 
 	i = random()%((strlen((char*)surname)-1)/2+1);
 
-    // È·±£iÎª2µÄ±¶Êı
+    // ç¡®ä¿iä¸º2çš„å€æ•°
 	if (i%2 && i!= 0) i--;
 
 	fn->w[0] = surname[i];
@@ -230,13 +230,13 @@ char *CStyle::_full2name2(struct Fullname *fn)
 {
 	int i;
 
-	// ÖØ¶¨Ïò
+	// é‡å®šå‘
 	surname = (struct Word *)buffer_surname_female2;
 	name = (struct Word *)buffer_name_female;
 
 	i = random()%((strlen((char*)surname)-1)/2+1);
 
-    // È·±£iÎª2µÄ±¶Êı
+    // ç¡®ä¿iä¸º2çš„å€æ•°
 	if (i%2 && i!= 0) i--;
 
 	fn->w[0] = surname[i];
@@ -251,14 +251,14 @@ char *CStyle::_full2name22(struct Fullname *fn)
 {
 	int i, j;
 
-	// ÖØ¶¨Ïò
+	// é‡å®šå‘
 	surname = (struct Word *)buffer_surname_female2;
 	name = (struct Word *)buffer_name_female2;
 
 	i = random()%((strlen((char*)surname)-1)/2+1);
 	j = random()%((strlen((char*)name)-1)/2+1);
 
-    // È·±£iÓëjÎª2µÄ±¶Êı
+    // ç¡®ä¿iä¸jä¸º2çš„å€æ•°
 	if (i%2 && i!=0) i--;
 	if (j%2 && j!=0) j--;
 
@@ -274,15 +274,15 @@ char *CStyle::fullToString(const struct Fullname *fn)
 {
 	if (NULL == fn)
 	{
-		write_error("fullToString ´íÎó£¡ ²ÎÊı²»ÄÜÎªNULL!");
+		write_error("fullToString é”™è¯¯ï¼ å‚æ•°ä¸èƒ½ä¸ºNULL!");
 		return NULL;
 	}
 
-	// Ê¹ÓÃstatic¹Ø¼ü×Ö·ÀÖ¹bufferÖ¸ÕëÒòÉú´æÆÚ½áÊø¶ø±»Ïú»Ù
+	// ä½¿ç”¨staticå…³é”®å­—é˜²æ­¢bufferæŒ‡é’ˆå› ç”Ÿå­˜æœŸç»“æŸè€Œè¢«é”€æ¯
 	static char buffer[sizeof(struct Fullname)+1];
 	memset(buffer, '\0', sizeof(struct Fullname)+1);
 
-    // ½«Êı¾İ¸´ÖÆµ½»º³åÇøÖĞ
+    // å°†æ•°æ®å¤åˆ¶åˆ°ç¼“å†²åŒºä¸­
     buffer[0] = fn->w[0].w[0];
     buffer[1] = fn->w[0].w[1];
     buffer[2] = fn->w[1].w[0];
@@ -301,7 +301,7 @@ int CStyle::print(const int index)
 
     if (index < 0 || index > name_num)
     {
-        write_error("Ë÷Òı³¬³ö·¶Î§£¡\n");
+        write_error("ç´¢å¼•è¶…å‡ºèŒƒå›´ï¼\n");
         return -1;
     }
 
@@ -309,7 +309,7 @@ int CStyle::print(const int index)
 
     if (NULL == print)
     {
-        write_error("Ğè´òÓ¡µÄĞÕÃû²»´æÔÚ£¡\n");
+        write_error("éœ€æ‰“å°çš„å§“åä¸å­˜åœ¨ï¼\n");
         return -1;
     }
 
@@ -327,10 +327,10 @@ int CStyle::set_buffer(const char *src, SETNAME_FLAGS flags)
 
 	if (NULL == src)
     {
-        write_error("´ıÉèÖÃµÄ»º³åÇø²»´æÔÚ£¡\n");
+        write_error("å¾…è®¾ç½®çš„ç¼“å†²åŒºä¸å­˜åœ¨ï¼\n");
     }
 
-    // Õâ¶Î´úÂë·ÀÖ¹È¡Óà0´íÎó
+    // è¿™æ®µä»£ç é˜²æ­¢å–ä½™0é”™è¯¯
     if ((strlen(src)-1)/2 == 0)
     {
         buffer = new char[strlen(src)*2];
@@ -429,7 +429,7 @@ int CStyle::open_error_file(const char *filename, FILE *fp)
 
         if (NULL == error_fp)
         {
-            fprintf(stderr, "´ò¿ª´íÎó¼ÇÂ¼ÎÄ¼ş£º%s Ê§°Ü£¡\n", filename);
+            fprintf(stderr, "æ‰“å¼€é”™è¯¯è®°å½•æ–‡ä»¶ï¼š%s å¤±è´¥ï¼\n", filename);
             return -1;
         }
     }
@@ -441,21 +441,21 @@ int CStyle::write_error(const char *str, ...)
 {
     if (NULL == error_fp)
     {
-        fprintf(stderr, "´íÎóÎÄ¼şÖ¸Õë²»´æÔÚ£¬ÇëÏÈ´ò¿ª´íÎóÎÄ¼ş£¡\n");
+        fprintf(stderr, "é”™è¯¯æ–‡ä»¶æŒ‡é’ˆä¸å­˜åœ¨ï¼Œè¯·å…ˆæ‰“å¼€é”™è¯¯æ–‡ä»¶ï¼\n");
         return -1;
     }
 
     char buffer[1024];
     va_list args;
 
-    // ³õÊ¼»¯¿É±ä²ÎÊı²¢Ê¹ÓÃvsprintfÊä³öµ½bufferÖĞ
+    // åˆå§‹åŒ–å¯å˜å‚æ•°å¹¶ä½¿ç”¨vsprintfè¾“å‡ºåˆ°bufferä¸­
     va_start(args, str);
     vsprintf(buffer, str, args);
     va_end(args);
 
     fprintf(error_fp, buffer);
 
-    // Ë¢ĞÂÊä³öÁ÷
+    // åˆ·æ–°è¾“å‡ºæµ
     fflush(error_fp);
 
     return 0;
@@ -474,7 +474,7 @@ int CStyle::close_error_file(void)
 
 CStyle CStyle::clone(void)
 {
-    // ¸Ãº¯Êı¸´ÖÆ×ÔÉí²¢·µ»ØĞÂµÄ¶ÔÏó
+    // è¯¥å‡½æ•°å¤åˆ¶è‡ªèº«å¹¶è¿”å›æ–°çš„å¯¹è±¡
     return CStyle(*this);
 }
 
@@ -489,7 +489,7 @@ char *CStyle::get_all_fullname(void)
         strcat(buffer, "\n");
     }
 
-    // È¥µô×îºóÃæµÄÒ»¸ö"\n"
+    // å»æ‰æœ€åé¢çš„ä¸€ä¸ª"\n"
     buffer[strlen(buffer)-1] = '\0';
 
     return buffer;
@@ -513,7 +513,7 @@ int CStyle::insert(NAME_FLAGS flags)
         }
     }
 
-    // µ½ÕâÀï±íÃ÷ÔÚlist±íÖĞÃ»ÓĞÑ°ÕÒµ½¿ÕÎ»£¬Ö»ÄÜÔÚÁĞ±í×îºóµÄÎ»ÖÃĞÂÔö
+    // åˆ°è¿™é‡Œè¡¨æ˜åœ¨listè¡¨ä¸­æ²¡æœ‰å¯»æ‰¾åˆ°ç©ºä½ï¼Œåªèƒ½åœ¨åˆ—è¡¨æœ€åçš„ä½ç½®æ–°å¢
     create(i, flags);
     return i;
 }
@@ -522,13 +522,13 @@ int CStyle::del(const int index)
 {
     if (index < 0 || index > name_num)
     {
-        write_error("del()´íÎó£¡Ë÷Òı³¬³ö·¶Î§£¡\n");
+        write_error("del()é”™è¯¯ï¼ç´¢å¼•è¶…å‡ºèŒƒå›´ï¼\n");
         return -1;
     }
 
     for (int i=index; i<name_num-1; i++)
     {
-        // Ë³ĞòÇ°ÒÆ
+        // é¡ºåºå‰ç§»
         list[i] = list[i+1];
     }
 

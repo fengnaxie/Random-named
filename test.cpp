@@ -4,14 +4,12 @@
 
 int main(int argc, char **argv)
 {
-    CStyle cs(10);
-
-    cs.set_buffer("中国");
-    cs.open_error_file("error.txt");
-    cs.write_error("123%d", 1000);
-    cs.create(&cs.list[1]);
-    cs.print(&cs.list[1]);
-    cs.rest_buffer(_single_surname);
+    CStyle cs;
+    cs.create(0);
+    cs.create(1);
+    cs.create(2);
+    printf("%s\n", cs.get_all_fullname());
+    printf("%d\n", cs.del(1));
+    printf("%s\n", cs.get_all_fullname());
     return 0;
 }
-

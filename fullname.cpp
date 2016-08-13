@@ -328,6 +328,7 @@ int CStyle::set_buffer(const char *src, SETNAME_FLAGS flags)
 	if (NULL == src || strlen(src)%2 !=0)
     {
         write_error("待设置的缓冲区错误！\n");
+        return -1;
     }
 
     // 这段代码防止取余0错误

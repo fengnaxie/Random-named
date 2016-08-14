@@ -76,4 +76,13 @@ printf("%s\n", cs.create());
 
 ### 4.makefile
 使用make命令来生成libfullname.so
+
 使用make clean命令来清除生成的libfullname.so
+
+默认不支持UTF-8文件格式，如需要，可在makefile中去掉
+
+`#utf-8=-D FILE_UTF_8`
+
+前面的#号
+
+编译时请加入-D FILE_UTF_8以启用utf-8支持

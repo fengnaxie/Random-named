@@ -7,12 +7,13 @@
 **作者：		筱枫
 */
 
-#include "fullname.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <memory.h>
 #include <stdarg.h>
+
+#include "fullname.h"
 
 
 CStyle::CStyle(int _name_num)
@@ -167,8 +168,14 @@ char *CStyle::_fullname(struct Fullname *fn)
 	surname = (struct Word *)buffer_surname_female;
 	name = (struct Word *)buffer_name_female;
 
-	fn->w[0] = surname[random()%((strlen((char *)surname)-1)/2+1)];
-	fn->w[1] = name[random()%((strlen((char *)name)-1)/2+1)];
+	if (!check((char *)surname) || !check((char *)name))
+    {
+        write_error("校验内部缓冲区失败！\n");
+        return NULL;
+    }
+
+	fn->w[0] = surname[random()%((strlen((char *)surname)-1)/sizeof(struct Word)+1)];
+	fn->w[1] = name[random()%((strlen((char *)name)-1)/sizeof(struct Word)+1)];
 
 	return fullToString(fn);
 }
@@ -179,93 +186,104 @@ char *CStyle::_fullname2(struct Fullname *fn)
 	surname = (struct Word *)buffer_surname_female;
 	name = (struct Word *)buffer_name_female;
 
-	fn->w[0] = surname[random()%((strlen((char *)surname)-1)/2+1)];
-	fn->w[1] = name[random()%((strlen((char *)name)-1)/2+1)];
-	fn->w[2] = name[random()%((strlen((char *)name)-1)/2+1)];
+	if (!check((char *)surname) || !check((char *)name))
+    {
+        write_error("校验内部缓冲区失败！\n");
+        return NULL;
+    }
+
+	fn->w[0] = surname[random()%((strlen((char *)surname)-1)/sizeof(struct Word)+1)];
+	fn->w[1] = name[random()%((strlen((char *)name)-1)/sizeof(struct Word)+1)];
+	fn->w[2] = name[random()%((strlen((char *)name)-1)/sizeof(struct Word)+1)];
 
 	return fullToString(fn);
 }
 
 char *CStyle::_fullname22(struct Fullname *fn)
 {
-	int i;
+	struct Doublename temp;
+	struct Doublename *name;
 
 	// 重定向
 	surname = (struct Word *)buffer_surname_female;
-	name = (struct Word *)buffer_name_female2;
+	name = (struct Doublename *)buffer_name_female2;
 
-	i = random()%((strlen((char *)name)-1)/2+1);
+	if (!check((char *)surname) || !check((char *)name))
+    {
+        write_error("校验内部缓冲区失败！\n");
+        return NULL;
+    }
 
-    // 确保i为2的倍数
-	if (i%2 && i!=0) i--;
+	temp = name[random()%((strlen((char *)name)-1)/sizeof(struct Doublename)+1)];
 
-	fn->w[0] = surname[random()%((strlen((char *)surname)-1)/2+1)];
-	fn->w[1] = name[i];
-	fn->w[2] = name[i+1];
+	fn->w[0] = surname[random()%((strlen((char *)surname)-1)/sizeof(struct Word)+1)];
+	fn->w[1] = temp.w[0];
+	fn->w[2] = temp.w[1];
 
 	return fullToString(fn);
 }
 
 char *CStyle::_full2name(struct Fullname *fn)
 {
-	int i;
+    struct Doublename temp;
+    struct Doublename *surname;
 
 	// 重定向
-	surname = (struct Word *)buffer_surname_female2;
+	surname = (struct Doublename *)buffer_surname_female2;
 	name = (struct Word *)buffer_name_female;
 
-	i = random()%((strlen((char*)surname)-1)/2+1);
+	if (!check((char *)surname) || !check((char *)name))
+    {
+        write_error("校验内部缓冲区失败！\n");
+        return NULL;
+    }
 
-    // 确保i为2的倍数
-	if (i%2 && i!= 0) i--;
+	temp = surname[random()%((strlen((char*)surname)-1)/sizeof(struct Doublename)+1)];
 
-	fn->w[0] = surname[i];
-	fn->w[1] = surname[i+1];
-	fn->w[2] = name[random()%((strlen((char *)name)-1)/2+1)];
+	fn->w[0] = temp.w[0];
+	fn->w[1] = temp.w[1];
+	fn->w[2] = name[random()%((strlen((char *)name)-1)/sizeof(struct Word)+1)];
 
 	return fullToString(fn);
 }
 
 char *CStyle::_full2name2(struct Fullname *fn)
 {
-	int i;
+	struct Doublename temp;
+	struct Doublename *surname;
 
 	// 重定向
-	surname = (struct Word *)buffer_surname_female2;
+	surname = (struct Doublename *)buffer_surname_female2;
 	name = (struct Word *)buffer_name_female;
 
-	i = random()%((strlen((char*)surname)-1)/2+1);
+    temp = surname[random()%((strlen((char*)surname)-1)/sizeof(struct Doublename)+1)];
 
-    // 确保i为2的倍数
-	if (i%2 && i!= 0) i--;
-
-	fn->w[0] = surname[i];
-	fn->w[1] = surname[i+1];
-	fn->w[2] = name[random()%((strlen((char *)name)-1)/2+1)];
-	fn->w[3] = name[random()%((strlen((char *)name)-1)/2+1)];
+	fn->w[0] = temp.w[0];
+	fn->w[1] = temp.w[1];
+	fn->w[2] = name[random()%((strlen((char *)name)-1)/sizeof(struct Word)+1)];
+	fn->w[3] = name[random()%((strlen((char *)name)-1)/sizeof(struct Word)+1)];
 
 	return fullToString(fn);
 }
 
 char *CStyle::_full2name22(struct Fullname *fn)
 {
-	int i, j;
+	struct Doublename temp_surname;
+	struct Doublename temp_name;
+	struct Doublename *surname;
+	struct Doublename *name;
 
 	// 重定向
-	surname = (struct Word *)buffer_surname_female2;
-	name = (struct Word *)buffer_name_female2;
+	surname = (struct Doublename *)buffer_surname_female2;
+	name = (struct Doublename *)buffer_name_female2;
 
-	i = random()%((strlen((char*)surname)-1)/2+1);
-	j = random()%((strlen((char*)name)-1)/2+1);
+    temp_surname = surname[random()%((strlen((char*)surname)-1)/sizeof(struct Doublename)+1)];
+    temp_name = name[random()%((strlen((char*)name)-1)/sizeof(struct Doublename)+1)];
 
-    // 确保i与j为2的倍数
-	if (i%2 && i!=0) i--;
-	if (j%2 && j!=0) j--;
-
-	fn->w[0] = surname[i];
-	fn->w[1] = surname[i+1];
-	fn->w[2] = name[j];
-	fn->w[3] = name[j+1];
+	fn->w[0] = temp_surname.w[0];
+	fn->w[1] = temp_surname.w[1];
+	fn->w[2] = temp_name.w[0];
+	fn->w[3] = temp_name.w[1];
 
 	return fullToString(fn);
 }
@@ -282,15 +300,15 @@ char *CStyle::fullToString(const struct Fullname *fn)
 	static char buffer[sizeof(struct Fullname)+1];
 	memset(buffer, '\0', sizeof(struct Fullname)+1);
 
-    // 将数据复制到缓冲区中
-    buffer[0] = fn->w[0].w[0];
-    buffer[1] = fn->w[0].w[1];
-    buffer[2] = fn->w[1].w[0];
-    buffer[3] = fn->w[1].w[1];
-    buffer[4] = fn->w[2].w[0];
-    buffer[5] = fn->w[2].w[1];
-    buffer[6] = fn->w[3].w[0];
-    buffer[7] = fn->w[3].w[1];
+    for (unsigned int i=0, j=0; i<sizeof(struct Fullname); i += sizeof(struct Word), j++)
+    {
+        buffer[i] = fn->w[j].w[0];
+        buffer[i+1] = fn->w[j].w[1];
+
+        #ifdef FILE_UTF_8
+        buffer[i+2] = fn->w[j].w[2];
+        #endif
+    }
 
 	return buffer;
 }
@@ -304,7 +322,7 @@ int CStyle::print(const int index)
         write_error("索引超出范围！\n");
         return -1;
     }
-    
+
     if (NULL == list)
     {
     	write_error("内部缓冲区不存在！\n");
@@ -313,11 +331,7 @@ int CStyle::print(const int index)
 
     print = &list[index];
 
-    printf("%c%c", print->w[0].w[0], print->w[0].w[1]);
-    printf("%c%c", print->w[1].w[0], print->w[1].w[1]);
-    printf("%c%c", print->w[2].w[0], print->w[2].w[1]);
-    printf("%c%c", print->w[3].w[0], print->w[3].w[1]);
-    printf("\n");
+    printf("%s\n", fullToString(print));
     return 0;
 }
 
@@ -325,16 +339,16 @@ int CStyle::set_buffer(const char *src, SETNAME_FLAGS flags)
 {
     static char *buffer = NULL;
 
-	if (NULL == src || strlen(src)%2 !=0)
+	if (NULL == src || !check(src))
     {
         write_error("待设置的缓冲区错误！\n");
         return -1;
     }
 
     // 这段代码防止取余0错误
-    if ((strlen(src)-1)/2 == 0)
+    if ((strlen(src)-1)/sizeof(struct Word) == 0)
     {
-        buffer = new char[strlen(src)*2];
+        buffer = new char[strlen(src)*sizeof(struct Word)];
         strcpy(buffer, src);
         strcat(buffer, src);
     }
@@ -372,7 +386,7 @@ int CStyle::set_buffer(const char *src, SETNAME_FLAGS flags)
 	return 0;
 }
 
-int CStyle::rest_buffer(SETNAME_FLAGS flags)
+int CStyle::reset_buffer(SETNAME_FLAGS flags)
 {
     switch (flags)
     {
@@ -382,6 +396,7 @@ int CStyle::rest_buffer(SETNAME_FLAGS flags)
 
         delete [] buffer_surname_female;
         buffer_surname_female = store_buffer[0];
+		store_buffer[0] = NULL;
         break;
 
     case _double_surname:
@@ -390,6 +405,7 @@ int CStyle::rest_buffer(SETNAME_FLAGS flags)
 
         delete [] buffer_surname_female2;
         buffer_surname_female2 = store_buffer[1];
+		store_buffer[1] = NULL;
         break;
 
 
@@ -399,6 +415,7 @@ int CStyle::rest_buffer(SETNAME_FLAGS flags)
 
         delete [] buffer_name_female;
         buffer_name_female = store_buffer[2];
+		store_buffer[2] = NULL;
         break;
 
     case _double_name:
@@ -407,6 +424,7 @@ int CStyle::rest_buffer(SETNAME_FLAGS flags)
 
         delete [] buffer_name_female2;
         buffer_name_female2 = store_buffer[3];
+		store_buffer[3] = NULL;
         break;
 
     default:
@@ -521,7 +539,7 @@ int CStyle::insert(NAME_FLAGS flags)
 
 int CStyle::del(const int index)
 {
-    if (index < 0 || index > name_num)
+    if (index < 0 || index >= name_num)
     {
         write_error("del()错误！索引超出范围！\n");
         return -1;
@@ -548,6 +566,11 @@ int CStyle::get_name_num(void)
     return name_num;
 }
 
+int CStyle::check(const char *src)
+{
+    return (0 == (strlen(src)%sizeof(struct Word)));
+}
+
 CStyle::~CStyle()
 {
     if (name_num > 0)
@@ -557,8 +580,7 @@ CStyle::~CStyle()
     {
         if (NULL != store_buffer[i])
         {
-            delete[] store_buffer[i];
-            store_buffer[i] = NULL;
+			reset_buffer(SETNAME_FLAGS(i));
         }
     }
 

@@ -73,3 +73,7 @@ printf("%s\n", cs.create());
 
 ##### `CStyle clone(void)`
 复制自身并返回
+
+### 4.makefile
+使用make命令来生成libfullname.so
+使用make clean命令来清除生成的libfullname.so

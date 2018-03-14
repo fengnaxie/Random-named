@@ -1,14 +1,14 @@
 /*
 **程序名：		瞎起名工具
 **说明：		瞎起名，用作一个库链接使用，使用面向对象重构
-**版本：		V0.1
+**版本：		V0.2
 **开发日期：	2016/4/20
-**修改日期：	2016/8/13
+**修改日期：	2018/3/14
 **作者：		筱枫
 */
 
-#ifndef _STYLE_NAME_H_
-#define _STYLE_NAME_H_
+#ifndef _FULL_NAME_H_
+#define _FULL_NAME_H_
 
 #ifdef FILE_UTF_8
     const int char_size = 3;
